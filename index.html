@@ -665,9 +665,18 @@ var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n
       }, 3000);
 
       // Redirect on click
-      btn.addEventListener("click", () => {
-        window.location.href = "https://freecash.com/r/96d93aba09ff969a0183";
-      });
+btn.addEventListener("click", () => {
+  // Fire TikTok pixel event FIRST
+  if (typeof ttq !== "undefined") {
+    ttq.track("ClickButton"); // <-- you can rename this event
+  }
+
+  // Delay redirect so TikTok receives the event
+  setTimeout(() => {
+    window.location.href = "https://freecash.com/r/96d93aba09ff969a0183";
+  }, 250); // 250ms = perfect balance (recommended)
+});
+
     })();
   </script>
 
@@ -684,6 +693,7 @@ var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n
   </div>
 </body>
 </html>
+
 
 
 
