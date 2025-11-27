@@ -25,42 +25,12 @@
       max-width: 480px;         /* iOS-friendly max width; adjust if needed */
       padding: 20px;            /* padding around the whole column */
       box-sizing: border-box;
-      gap: 20px;                /* <--- Adjust spacing between your sections */
+      gap: 40px;                /* <--- Adjust spacing between your sections */
       /* You can increase this when your embeds are added */
     }
 
-    /* Center the embedded score + number blocks horizontally */
-    #section1,
-    #section2 {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* Make score and 97% sit closer vertically */
-    /* Negative margins are used to reduce the visual gap between those two sections */
-    #section1 { margin-bottom: -10px; }
-    #section2 { margin-top: -10px; }
-
-    /* Keep "your data shows..." and "available offer value" at 20px apart:
-       that's handled by the .column gap (20px) so no override here. */
-
-    /* Make available offer value (section5) and last updated (section6) ~5px apart */
-    /* .column has gap:20px; override the gap between these two specifically */
-    #section5 { margin-bottom: 5px; }
-    #section6 { margin-top: 0; }
-
-    /* Push FreeCash button further down */
-    #section7 { margin-top: 40px; }
-
-    /* Small helper: ensure inner inline-flex centering won't collapse on very narrow screens */
-    #section1 > *:first-child,
-    #section2 > *:first-child {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    /* Optional: add border to see the column while testing */
+    /* .column { border: 1px solid red; } */
   </style>
 </head>
 
@@ -70,133 +40,89 @@
     <!-- SECTION 1 — Your first script/embed goes here -->
     <!-- Example: Title, number animation, etc -->
     <div id="section1">
-      <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Score Fade-In Animated</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body,
-    html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #fafafa;
-      font-family: 'Inter', Arial, sans-serif;
-    }
-
-    .score-text {
+    /* section1 text only styling */
+    #scoreText {
       font-weight: 700;
       font-size: 28px;
       color: #111;
       opacity: 0;
-      /* start hidden */
       transform: translateY(10px) scale(0.95);
-      /* start slightly down & smaller */
       transition: opacity 1s ease, transform 1s ease;
-      /* smooth fade + movement */
+      text-align: center; /* ← keep centered */
+      width: 100%;        /* ← ensures perfect mobile centering */
     }
   </style>
-</head>
 
-<body>
-
-  <div id="scoreText" class="score-text">Score:</div>
+  <div id="scoreText">Score:</div>
 
   <script>
-    // Delay 2 seconds before fade-in + animation
-  setTimeout(() => {
-    const score = document.getElementById('scoreText');
-    score.style.opacity = '0.1';          // fade to 10% opacity
-    score.style.transform = 'translateY(0) scale(1)'; // slide up & scale to full
-  }, 2000);
+    setTimeout(() => {
+      const score = document.getElementById('scoreText');
+      score.style.opacity = '0.1';
+      score.style.transform = 'translateY(0) scale(1)';
+    }, 2000);
   </script>
+</div>
 
-</body>
+<!-- NOTE: Adjust spacing BELOW this element using margin on #section1 -->
 
-</html>
-
-    </div>
 
     <!-- SECTION 2 -->
     <div id="section2">
-      <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Number Growing Animation - Efficient Glow</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet">
   <style>
-    .growing-text {
+    #number {
       font-size: 80px;
       font-weight: 700;
-      font-family: "Inter", Arial, Helvetica, sans-serif;
+      font-family: "Inter", Arial;
       transition: color 0.1s linear;
       visibility: hidden;
       white-space: nowrap;
+      text-align: center; /* ← fully centered */
+      width: 100%;        /* ← mobile friendly centering */
 
-      /* subtle glow animation using CSS keyframes */
+      /* glow animation */
       text-shadow: 0 0 8px rgba(255, 200, 0, 0.3),
-        0 0 16px rgba(255, 200, 0, 0.2),
-        0 0 24px rgba(255, 200, 0, 0.1);
+                   0 0 16px rgba(255, 200, 0, 0.2),
+                   0 0 24px rgba(255, 200, 0, 0.1);
       animation: glowPulse 1s infinite alternate;
     }
 
     @keyframes glowPulse {
       0% {
         text-shadow: 0 0 6px rgba(255, 200, 0, 0.2),
-          0 0 12px rgba(255, 200, 0, 0.1),
-          0 0 18px rgba(255, 200, 0, 0.05);
+                     0 0 12px rgba(255, 200, 0, 0.1),
+                     0 0 18px rgba(255, 200, 0, 0.05);
       }
-
       100% {
         text-shadow: 0 0 10px rgba(255, 200, 0, 0.4),
-          0 0 20px rgba(255, 200, 0, 0.2),
-          0 0 30px rgba(255, 200, 0, 0.1);
+                     0 0 20px rgba(255, 200, 0, 0.2),
+                     0 0 30px rgba(255, 200, 0, 0.1);
       }
     }
   </style>
-</head>
 
-<body>
-  <div class="growing-text" id="number">0%</div>
+  <div id="number">0%</div>
 
   <script>
     (function () {
       const numberElement = document.getElementById("number");
-
       let start = null;
       const duration = 2000;
       const target = 97;
 
-      function lerp(a, b, t) {
-        return a + (b - a) * t;
-      }
-
-      function easeOutQuint(t) {
-        return 1 - Math.pow(1 - t, 5);
-      }
+      function lerp(a, b, t) { return a + (b - a) * t; }
+      function easeOutQuint(t) { return 1 - Math.pow(1 - t, 5); }
 
       function animateGrowingText(timestamp) {
         if (!start) start = timestamp;
-
         let progress = (timestamp - start) / duration;
         if (progress > 1) progress = 1;
 
-        let eased = easeOutQuint(progress);
+        const eased = easeOutQuint(progress);
         const value = Math.floor(eased * target);
         numberElement.textContent = value + "%";
 
-        // Update number color only
         let r, g, b;
         if (progress < 0.5) {
           r = Math.floor(lerp(180, 200, progress * 2));
@@ -207,26 +133,21 @@
           g = Math.floor(lerp(160, 140, (progress - 0.5) * 2));
           b = 0;
         }
-
         numberElement.style.color = `rgb(${r}, ${g}, ${b})`;
 
-        if (progress < 1) {
-          requestAnimationFrame(animateGrowingText);
-        }
+        if (progress < 1) requestAnimationFrame(animateGrowingText);
       }
 
-      // Delay 2 seconds before showing + animating
       setTimeout(() => {
         numberElement.style.visibility = "visible";
         requestAnimationFrame(animateGrowingText);
       }, 2000);
     })();
   </script>
-</body>
+</div>
 
-</html>
+<!-- NOTE: Adjust spacing ABOVE this element using margin on #section2 -->
 
-    </div>
 
     <!-- SECTION 3 -->
     <div id="section3">
